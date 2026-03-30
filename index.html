@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Matt — Creative Technologist</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue: #3B82F6;
+    --blue-light: #EFF6FF;
+    --blue-dark: #1D4ED8;
+    --text: #111;
+    --muted: #6B7280;
+    --border: #E5E7EB;
+    --surface: #F9FAFB;
+    --white: #fff;
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 16px;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 8px 12px;
+    display: flex;
+    gap: 4px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+  }
+
+  nav a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 18px;
+    color: var(--muted);
+    transition: background 0.2s, color 0.2s;
+  }
+  nav a:hover { background: var(--surface); color: var(--text); }
+  nav a.active { background: var(--blue); color: white; }
+
+  /* SECTIONS */
+  section { padding: 100px 24px; max-width: 800px; margin: 0 auto; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-top: 100px;
+  }
+
+  .avatar {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #BFDBFE, #93C5FD);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    color: var(--blue-dark);
+    margin-bottom: 32px;
+    border: 3px solid white;
+    box-shadow: 0 0 0 2px var(--border);
+  }
+
+  h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.4rem, 6vw, 4rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--muted);
+    font-style: italic;
+    max-width: 520px;
+    margin-bottom: 24px;
+    font-weight: 300;
+  }
+
+  .ubc-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 16px;
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .ubc-badge span { color: #002145; font-weight: 500; }
+
+  .scroll-hint {
+    margin-top: 60px;
+    font-size: 12px;
+    color: var(--border);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .scroll-hint::after {
+    content: '';
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--border), transparent);
+  }
+
+  /* ABOUT */
+  #about h2 { font-family: 'DM Serif Display', serif; font-size: 2rem; font-weight: 400; margin-bottom: 24px; }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .about-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+  .about-card .icon { font-size: 20px; margin-bottom: 8px; }
+  .about-card h3 { font-size: 14px; font-weight: 500; margin-bottom: 6px; }
+  .about-card p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  .about-text { font-size: 1.05rem; color: #374151; line-height: 1.8; }
+  .about-text + .about-text { margin-top: 16px; }
+
+  /* PORTFOLIO */
+  #portfolio h2 { font-family: 'DM Serif Display', serif; font-size: 2rem; font-weight: 400; margin-bottom: 8px; }
+  .section-sub { font-size: 14px; color: var(--muted); margin-bottom: 32px; }
+
+  .filter-bar { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
+  .filter-btn {
+    padding: 6px 16px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: white;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all 0.15s;
+  }
+  .filter-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .filter-btn.active { background: var(--blue); color: white; border-color: var(--blue); }
+
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .portfolio-card {
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+  .portfolio-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+
+  .card-thumb {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-thumb.photo { background: linear-gradient(135deg, #E0F2FE, #BAE6FD); }
+  .card-thumb.video { background: linear-gradient(135deg, #EDE9FE, #DDD6FE); }
+
+  .card-body { padding: 16px; background: white; }
+  .card-type { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--blue); font-weight: 500; margin-bottom: 4px; }
+  .card-title { font-size: 15px; font-weight: 500; margin-bottom: 4px; }
+  .card-desc { font-size: 13px; color: var(--muted); }
+
+  /* RESUME */
+  #resume h2 { font-family: 'DM Serif Display', serif; font-size: 2rem; font-weight: 400; margin-bottom: 8px; }
+
+  .timeline { margin-top: 32px; position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .timeline-item {
+    padding: 0 0 32px 28px;
+    position: relative;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 6px;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--blue);
+    border: 2px solid white;
+    box-shadow: 0 0 0 1px var(--blue);
+  }
+
+  .tl-date { font-size: 12px; color: var(--muted); margin-bottom: 4px; font-weight: 400; }
+  .tl-role { font-size: 15px; font-weight: 500; margin-bottom: 2px; }
+  .tl-place { font-size: 13px; color: var(--blue); margin-bottom: 8px; }
+  .tl-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  .skills-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 40px; }
+  .skill-tag {
+    padding: 5px 14px;
+    border-radius: 999px;
+    background: var(--blue-light);
+    color: var(--blue-dark);
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid #BFDBFE;
+  }
+
+  /* CONTACT */
+  #contact {
+    text-align: center;
+    padding-bottom: 140px;
+  }
+  #contact h2 { font-family: 'DM Serif Display', serif; font-size: 2.4rem; font-weight: 400; margin-bottom: 12px; }
+  #contact p { color: var(--muted); margin-bottom: 36px; }
+
+  .contact-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    transition: all 0.15s;
+    color: var(--text);
+    background: white;
+  }
+  .contact-btn.primary { background: var(--blue); color: white; border-color: var(--blue); }
+  .contact-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
+  .contact-btn.primary:hover { box-shadow: 0 6px 20px rgba(59,130,246,0.35); }
+
+  footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 12px;
+    color: var(--border);
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 600px) {
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .about-grid { grid-template-columns: 1fr; }
+    nav a { width: 38px; height: 38px; font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#hero" class="active" title="Home">🏠</a>
+  <a href="#about" title="About">👤</a>
+  <a href="#portfolio" title="Portfolio">🎞️</a>
+  <a href="#resume" title="Resume">📄</a>
+  <a href="#contact" title="Contact">✉️</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="avatar">M</div>
+  <h1>Hi 👋, I'm Matt.</h1>
+  <p class="hero-sub">I capture stories through a lens and build digital spaces to host them.</p>
+  <a href="https://www.sauder.ubc.ca" class="ubc-badge">
+    🎓 <span>UBC Sauder School of Business</span> &nbsp;·&nbsp; Bachelor of Commerce
+  </a>
+  <div class="scroll-hint">scroll</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <h2>About me</h2>
+  <p class="about-text">
+    I'm a creative technologist at the intersection of visual storytelling and digital design. Currently studying Commerce at UBC Sauder, I combine my business background with a passion for photography and film to create compelling digital experiences.
+  </p>
+  <p class="about-text">
+    Applying for a TA role at the Digital Lab — I bring hands-on experience in visual production, editing workflows, and a genuine drive to help others develop their creative and technical skills.
+  </p>
+  <div class="about-grid">
+    <div class="about-card">
+      <div class="icon">📷</div>
+      <h3>Photography</h3>
+      <p>Portraits, street, and documentary photography with a focus on authentic moments.</p>
+    </div>
+    <div class="about-card">
+      <div class="icon">🎬</div>
+      <h3>Video & Film</h3>
+      <p>Short-form storytelling, editing, colour grading, and motion work.</p>
+    </div>
+    <div class="about-card">
+      <div class="icon">💻</div>
+      <h3>Web Design</h3>
+      <p>Clean, minimal interfaces — form follows function, always.</p>
+    </div>
+    <div class="about-card">
+      <div class="icon">🎓</div>
+      <h3>UBC Sauder</h3>
+      <p>Bachelor of Commerce — blending business strategy with creative execution.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <h2>Portfolio</h2>
+  <p class="section-sub">A selection of recent work in photography and film.</p>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filter('all', this)">All</button>
+    <button class="filter-btn" onclick="filter('photo', this)">Photography</button>
+    <button class="filter-btn" onclick="filter('video', this)">Video / Film</button>
+  </div>
+
+  <div class="portfolio-grid" id="grid">
+
+    <div class="portfolio-card" data-type="photo">
+      <div class="card-thumb photo">📷</div>
+      <div class="card-body">
+        <div class="card-type">Photography</div>
+        <div class="card-title">Urban Portraits</div>
+        <div class="card-desc">Documentary portrait series shot across Vancouver's east side.</div>
+      </div>
+    </div>
+
+    <div class="portfolio-card" data-type="video">
+      <div class="card-thumb video">🎬</div>
+      <div class="card-body">
+        <div class="card-type">Video / Film</div>
+        <div class="card-title">Short Doc — Found Spaces</div>
+        <div class="card-desc">A 4-minute documentary on overlooked urban architecture.</div>
+      </div>
+    </div>
+
+    <div class="portfolio-card" data-type="photo">
+      <div class="card-thumb photo">🌿</div>
+      <div class="card-body">
+        <div class="card-type">Photography</div>
+        <div class="card-title">Pacific Light</div>
+        <div class="card-desc">Landscape and nature series exploring the BC coast.</div>
+      </div>
+    </div>
+
+    <div class="portfolio-card" data-type="video">
+      <div class="card-thumb video">🎞️</div>
+      <div class="card-body">
+        <div class="card-type">Video / Film</div>
+        <div class="card-title">Brand Reel — Sauder x Design</div>
+        <div class="card-desc">Promotional film produced for a campus design initiative.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- RESUME -->
+<section id="resume">
+  <h2>Experience</h2>
+  <p class="section-sub">My journey blending commerce, creativity, and technology.</p>
+
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="tl-date">2024 – Present</div>
+      <div class="tl-role">Digital Lab TA Candidate</div>
+      <div class="tl-place">UBC Sauder Digital Lab</div>
+      <div class="tl-desc">Supporting students with digital production tools, creative workflows, and hands-on media projects across photography, video, and design.</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-date">2023 – 2024</div>
+      <div class="tl-role">Freelance Photographer & Videographer</div>
+      <div class="tl-place">Vancouver, BC</div>
+      <div class="tl-desc">Produced photography and short-form video content for local brands, events, and student organizations. Managed full production pipeline from shoot to final delivery.</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-date">2022 – 2023</div>
+      <div class="tl-role">Content Creator</div>
+      <div class="tl-place">UBC Student Society</div>
+      <div class="tl-desc">Led visual content strategy for campus events and social channels. Photographed, edited, and published multimedia content reaching 10,000+ students.</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-date">2021 – Present</div>
+      <div class="tl-role">Bachelor of Commerce</div>
+      <div class="tl-place">UBC Sauder School of Business</div>
+      <div class="tl-desc">Coursework in marketing, strategy, and entrepreneurship — applied with a creative and technology-forward perspective.</div>
+    </div>
+
+  </div>
+
+  <div class="skills-row">
+    <span class="skill-tag">Adobe Lightroom</span>
+    <span class="skill-tag">Premiere Pro</span>
+    <span class="skill-tag">After Effects</span>
+    <span class="skill-tag">Figma</span>
+    <span class="skill-tag">Capture One</span>
+    <span class="skill-tag">Final Cut Pro</span>
+    <span class="skill-tag">Photography</span>
+    <span class="skill-tag">Colour Grading</span>
+    <span class="skill-tag">Web Design</span>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <h2>Let's connect.</h2>
+  <p>Open to creative collaborations, TA opportunities, and interesting projects.</p>
+  <div class="contact-links">
+    <a href="mailto:matt@student.ubc.ca" class="contact-btn primary">✉️ &nbsp;Email me</a>
+    <a href="#" class="contact-btn">🔗 &nbsp;LinkedIn</a>
+    <a href="#" class="contact-btn">📸 &nbsp;Instagram</a>
+  </div>
+</section>
+
+<footer>
+  © 2026 Matt · UBC Sauder · Built with care
+</footer>
+
+<script>
+  function filter(type, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.portfolio-card').forEach(card => {
+      if (type === 'all' || card.dataset.type === type) {
+        card.style.display = '';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('nav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        const id = entry.target.id;
+        const link = document.querySelector(`nav a[href="#${id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { threshold: 0.4 });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
